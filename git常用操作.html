@@ -1,0 +1,54 @@
+<html>
+    <head>常用命令</head>
+    <body>
+        <p>
+            pwd:查看所在目录结构
+        </p>
+        <p>
+            git add . :添加最近所有到暂存区
+        </p>
+        <p>
+            git commit -m 'mess' :提交仓库
+        </p>
+        <p>
+            git status:查看暂存区和仓库状态
+        </p>
+        <p>
+            git diff file:查看file文件的最新变化
+        </p>
+        <p>
+            q :退出查看状态
+        </p>
+        <p>
+            git log:穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。
+        </p>
+        <p>
+            git reflog: 要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。
+        </p>
+        <p>
+            git reset （版本号-前几位即可）: 返回到指定的过去或未来的具体版本
+        </p>
+        <p>
+            git reset head file(如果add 但未commit):把file 从暂存区退回到工作区
+            然后再git checkout -- file :把工作区清理干净（既可完全把写错并且add-但没提交的文件恢复原样）
+        </p>
+        <p>
+            git checkout -- file:把工作区内容恢复（写错但未提交）2:切换到file分支
+        </p>
+        <p>
+            git checkout -b dev: 创建dev分支并切换到dev分支  相当于两条命令:$ git branch dev  $ git checkout dev
+        </p>
+        <p>
+            git branch:查看当前分支  （会列出所有分支）*的是当前分支
+        </p>
+        <p>
+            git branch (name) :创建分支：git branch name
+        </p>
+        <p>
+            git branch -d name 删除分支
+        </p>
+        <p>
+            git merge dev：把dev分支合并到当前分支里
+        </p>
+    </body>
+</html>
