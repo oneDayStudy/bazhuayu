@@ -1,0 +1,215 @@
+<html>
+
+<head>
+    <title>git</title>
+    <body>
+        <h1>参考：<a href="https://blog.csdn.net/zhandoushi1982/article/details/8464548">参考进入</a></h1>
+        <h2>GIT常用命令 && GIT本地使用 && GIT报错解决 && GIT的忽略文件（ignore files）</h2>
+        <h3>0）GIT目录结构及版本控制原理</h3>
+        <h4>GIT目录结构及版本控制原理:
+            <p>
+                $cd test_proj/.git 
+$ ls | more 
+branches/ # 新版的Git已经不再使用这个目录，所以大家看到它 #一般会是空的
+hooks/ # 默认的“hooks” 脚本文件
+info/ # 里面有一个exclude文件，指定本项目要忽略的文件 #，看一下这里
+logs/ # 各个refs的历史信息
+objects/ # 这个目录非常重要，里面存储都是Git的数据对象。包括：提交(commits), 树对象(trees)，二进制对象 #（blobs）,标签对象（tags）。
+refs/ # 标识着你的每个分支指向哪个提交（commit）。所有分支的命名信息保存在“.git/refs/heads”中
+COMMIT_EDITMSG # 保存着上一次提交时的注释信息
+config # 项目的配置信息
+description # 项目的描述信息
+HEAD # 项目当前在哪个分支的信息。cat HEAD回显ref: refs/heads/master，说明当前是master分支
+index # 索引文件，git add 把要添加的项暂存到这里，暂存区也叫索引文件，是一个在你的工作目录（working tree）和项目仓库间的暂存区域(staging area)，索引是一个二进制格式的文件，里面存放了与当前暂存内容相关的信息，包括暂存的文件名、文件内容的SHA1哈希串值等。
+            </p>
+        </h4>
+        <h4>
+            一个Git项目中文件的状态大概分成下面的两大类，而第二大类又分为三小类：
+            <p>
+                1，未被跟踪的文件（untracked file）
+2，已被跟踪的文件（tracked file） 
+     2.1，被修改但未被暂存的文件（changed but not updated或modified）
+     2.2，已暂存可以被提交的文件（changes to be committed 或staged）
+     2.3，自上次提交以来，未修改的文件(clean 或 unmodified)
+            </p>
+            <p>
+                Git把它所管理的所有对象（blob，tree，commit，tag……），全部根据它们的内容生成SHA1哈希串值作为对象名；根据目前的数学知识，如果两块数据的SHA1哈希串值相等，那么我们就可以认为这两块数据是相同的。这样会带来的几个好处：
+1，Git只要比较对象名，就可以很快的判断两个对象的内容是否相同。
+2，因为在每个仓库（repository）的“对象名”的计算方法都完全一样，如果同样的内容存在两个不同的仓库中，就会存在相同的“对象名”。
+3，Git还可以通过检查对象内容的SHA1的哈希值和“对象名”是否匹配，来判断对象内容是否正确。
+
+4，根据上面的原则：Git确实根据内容来生成名字的，而且同名（SHA1哈希串值）肯定会有相同内容，但是提交对象（commit）和其它对象有点不一样，它里面会多一个时间戳（timestamp），所以在不同的时间生成的提交对象，即使内容完全一样其名字也不会相同
+            </p>
+
+        </h4>
+        ---------------------
+        <h1>报错：</h1>
+        <h2>
+            （1）git add：添加至暂存区，但并未提交至服务器。git add . 是表示把当前目录下的所有更新添加至暂存区。有时在终端操作这个会提示：
+
+warning: CRLF will be replaced by LF in GeneSmartStay/res/values-zh-rTW/strings.xml.The file will have its original line endings in your working directory.
+        </h2>
+        <h3>
+            这是因为文件中换行符的差别导致的。这个提示的意思是说：会把windows格式（CRLF）转换成Unix格式（LF），这些是转换文件格式的警告，不影响使用。
+        </h3>
+        <h3>
+            需要注意的是：如果在上次执行“git add”之后再对文件的内容进行了修改，那么在执行“git status”命令时，Git会对文件内容进行SHA1哈希运算就会发现文件又被修改了，仍会提示需要add，这是因为SVN是追加式的，只需要add一次；而GIT每次修改后的提交都是新文件，所以需要重新add。其实这时“readme.txt“就同时呈现了两个状态：被修改但未被暂存的文件（changed but not updated），已暂存可以被提交的文件（changes to be committed）。如果我们这时提交的话，就是只会提交第一次“git add"所以暂存的文件内容；只有再add后再提交，才是commit修改后的内容。
+        </h3>
+        <h3>
+            2）git branch：可以创建一个新的分支，也可以查看当前仓库里所有的分支。git branch test创建名为test的分支，可以用git checkout test切换到test分支工作。如果仓库下的某分支不用了，可以用“git branch -d”命令把这个分支删掉。如果你想要删除的分支还没有被合并到其它分支中去，那么就不能用“git branch -d”来删除它，需要改用“git branch -D”来强制删除。
+        </h3>
+        <h3>
+            （3）git checkout：从暂存区恢复文件到工作区git checkout  --  <file>；有可以把Git 仓库（隐藏目录中的那些文件）导出到工作目录中；可以切换到某分支进行工作。Git把所有的历史提交信息全部存储在“Git目录”里，它就是一个Git项目的仓库；你对本地的源代码进行编辑修改后创建的提交也都会先保存在这里面，然后再推送到远端的服务器。当我们把项目目录和“Git目录”一起拷到其它电脑里，它能马上正常的工作（所有的提交信息全都保存在Git目录里）；甚至可以只把“Git目录”拷走也行，但是要再签出（checkout）一次。git checkout -- filename 这个是恢复到某文件修改前的版本，这样你做的本地修改都忽略不见了；如果不带具体文件名，只会提示更改记录，并不会做任何更新。git-checkout -f ，可以使用 -f 选项导出文件，覆盖本地修改，这样就可以将您带回到一个干净的状态。
+
+                另一个较重要的功能类似于svn update，如果某次之前的commit有多个不同目录下的文件，现在只想恢复其中的某个文件到历史版本，用git checkout  commit_id file_name  //取文件file_name的 在commit_id是的版本，commit_id为 git commit 时的sha值。
+        </h3>
+        <h3>
+            （4）git clean：清除工作区未跟踪文件或者手工文件。
+        </h3>
+        <h3>
+            （5）git cat-file：查看节点文件，-p查看节点内容，-t查看节点类型。Git的数据对象包括：提交(commits)、树对象(trees)、二进制对象（blobs）、标签对象（tags）。这些对象之间是什么关系呢？
+        </h3>
+        <h3>
+            （6）git commit：本地提交。git commit -m 'xxxxx'，以添加LOG的形式提交更改。提交的是暂存区的内容，而不是工作区的内容
+        </h3>
+        <h3>
+            （7）git config：查询和修改配置。当使用git时反馈*** Please tell me who you are，说明个人账户没有配置。git的配置文件；一共有三个：
+
+            A，/etc/gitconfig: 所有用户普遍适用的、系统的，git config --system选项
+            B，~/.gitconfig： 只适用该用户， git config --global选项
+            C，.git/config当前项目.git目录中，只适用当前项目， .git/config 
+            每一层都覆盖上一层，也就是优先级  .gitconfig  >  ~/.gitconfig  >  /etc/gitconfig。配置内容：A，用户信息：包括个人用户名称和电子邮件名称；B，文本编辑器：设置在需要打开文本编辑器来输入某些信息时默认编辑器，例如vi、 vim、 emacs等；C，差异分析工具：在解决合并冲突时使用哪种差异分析工具    
+        </h3>
+        <h3>
+            （8）git diff：本地文件与暂存区差异比较。查看本地文件和仓库已提交内容的差异：git diff HEAD；暂存区与HEAD的对比：git diff --cached；查看某个文件与仓库的差别：git diff filename.c 。查看master分支与子分支的差异：git diff 分支名。
+        </h3>
+        <h3>
+            （9）git fetch：获取远程版本库
+        </h3>
+        <h3>
+            （10）git init 和git clone：建立一个git仓库。有两种方式可以建立git仓库，一个是新建，一个是克隆现有的git仓库。 新建一个git仓库：  git init；克隆现有的git仓库：  git clone [url] [目录名（如果木有，则建立一个和原仓库同名的目录）。建立起来的git仓库都是在目录下多了一个.git目录，不同点是init的里边啥也木有，clone的是把目标git仓库复制过来了。android GIT源目录https://android.googlesource.com/?format=HTML
+        </h3>
+        <h3>
+            11）git log：显示提交日志（如果是clone来的，它也会继承所克隆的仓库的信息）。带参数-- fileName，fileName为任意文件名，查看指定文件的提交信息。 带参数 file/ ，    查看file文件夹下所有文件的提交记录。git log .：当前目录下的提交记录。
+
+        另外，git log -n 1：查看最后一次提交的信息；git log -n 1 --stat：想看到最近一次提交所有更改过的文件；git log -n 1 -p：想看到最近一次提交所有更改的细节。git log -p xxx.c：查看某文件所有次提交的详细修改细节。
+
+         如果log跟tag都有使用，可以用git log tag_relold..tag_relnew来显示这两次tag之间所列出的commit Log记录。
+        </h3>
+        <h3>
+            （12）git merge：分支合并。git merge子分支名，把子分支与master合并。
+        </h3>
+        <h3>
+            （13）git mv：重命名
+        </h3>
+        <h3>
+            （14）git pull：拉回远程版本库的更新，也即把服务器上的最新更改变更更新到本地工作区上（ 比如git-pull git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git，即拉取源代码树的更新）。如果pull时提示诸如 fc7cc33..ebf8026  master     -> origin/master，说明mastar已从fc7cc33更新到了ebf8026。本地如果想恢复到fc7cc33版本，再重新pull即可，要先恢复参见git reset。
+        </h3>
+        <h3>
+            （15）git push：推送至远程版本库
+        </h3>
+        <h3>
+            16）git remote：远程版本库管理
+        </h3>
+        <h3>
+            17）git rm：删除文件。git rm --cached <file>从暂存区删除某文件；git rm <file> 从暂存区和仓库中都删除某文件。
+
+                A，git rm file1 //删除文件跟踪并且删除仓库中的文件file1
+        
+                      git commit //提交刚才的删除动作，之后git不再管理该文件。
+        
+                B，git rm --cached file1 //删除文件跟踪但不删除仓库的文件file1
+        
+                       git commit //提交刚才的删除动作，之后git不再管理该文件。但是文件系统中还是有file1。
+        
+        不再跟踪某个目录，用git rm -rf xxx/（可能需要先保存好本地文件，避免误删），之后再commit。
+        </h3>
+        <h3>
+            （18）git status：显示整个工作区文件状态，该命令无法获知服务器上是否有更新，只能检测当前目录是否有未提交的。git status .：当前目录的差异状态。
+        </h3>
+        <h3>
+            （19）git reset：重置改变分支“游标”指向，或者从数据仓库恢复文件到工作区。git reset HEAD filename 取消暂存，文件回到已修改未暂存的状态。用git reset --hard 哈希码 ，可以恢复到之前旧的某个版本，比如：git reset --hard fc7cc33，则终端回显HEAD is now at fc7cc33 Support AccessibilityService。
+        </h3>
+        <h3>
+            20）git sp：生成差分升级包。用git lg列出LOG记录后，用sp  哈希码旧..哈希码新，就可以生成一个两个版本间的区别差分包XXX.PATCH。
+        </h3>
+        <h3>
+            21）git  apply：在收到别人sp出给的patch，合并到自己的CODE中时，可以用命令来做这份工作。在master目录下git apply --reject  xxx.patch就行了，不必手工来做。如果自己在合并patch之前做了其他修改，该命令会执行失败，需要手工合并。
+        </h3>
+        <h3>
+            22）git ls-files --stage：查看暂存区内容。
+        </h3>
+        <h3>
+            （23）git show：显示某次commit提交的细节和差异。比如git show commit_id，如果只看这次提交的某个文件的细节和差异，后面再加上路径和文加名就行了。
+        </h3>
+        <h3>
+            （24）git tag：可以用 git tag创建一个标签(tag)指定某个提交(commit)。比如 git tag stable-1 1b2e1d63ff，这样我们可以用stable-1 作为提交(commit) "1b2e1d63ff" 的代称(refer)。也即tag是某些典型log的另一个名称。用git tag -l可以列出所有的tag记录。
+        </h3>
+
+        ===============================================================================================================================================================================
+        <p>
+            假如项目在路经/home/ryan/codes/下面：
+            cd /home/ryan/codes/
+            git init
+            git add *
+            git commit -m "my project"
+            
+            即可。需要注意的是，子目录需没有被GIT管理过，不然会遗留.git目录，导致最上层的GIT添加过程不会完整。
+        </p>   
+        ===============================================================================================================================================================================
+            <h1>bug</h1>        
+        <p>
+            （1）当执行GIT操作时，如果回显：fatal: Unable to create ‘xxxx/.git/index.lock': File exists.If no other git process is currently running, this probably means a
+git process crashed in this repository earlier. Make sure no other git process is running and remove the file manually to continue.
+
+解决方法：rm -f ./.git/index.lock
+        </p>
+        
+        ===============================================================================================================================================================================
+        
+        <p>
+            使用GIT管理代码仓库时，有些文件是不需要进行管理的（不需要老被提示Untracked files，因为根本不用关注），比如编译生成的.o .a文件、某些生成文件夹等，这个时候就需要用到ignore文件。ignore文件均为如下格式：
+        </p>
+        <p>
+            
+# 以'#'开始的行，被视为注释.                                                                                                                        
+# 忽略掉所有文件名是 foo.txt的文件.
+foo.txt
+ 
+# 忽略所有生成的 html文件,
+*.html
+ 
+# foo.html是手工维护的，所以例外.
+!foo.html
+ 
+# 忽略所有.o和 .a文件.
+
+        </p>
+        <p>
+            比较常用的一种方法是在仓库所在目录下新建一个名为.gitignore的文件，编辑如上内容。.gitignore文件对其所在的目录及所在目录的全部子目录均有效。常用规则还有：
+            # 忽略*.o和*.a文件
+             *.[oa]
+            
+            # 忽略*.b和*.B文件，my.b除外
+            *.[bB]
+            !my.b
+            
+            # 忽略dbg文件和dbg目录
+            dbg
+            
+            # 只忽略dbg目录，不忽略dbg文件
+            dbg/
+            
+            # 只忽略dbg文件，不忽略dbg目录
+            dbg
+            !dbg/
+            
+            # 只忽略当前目录下的dbg文件和目录，子目录的dbg不在忽略范围内
+            /dbg
+        </p>
+        <p>
+            需要注意的是.gitignore文件放置位置，如果是对alps执行了git add/git commit，那么.git目录跟alps是同一层目录的。在当前目录下新建.gitignore文件，如果需要忽略alps/out目录，则添加内容out/即可，也即设定的当前所在目录是alps/。
+        </p>
+    </body>
+</head>
+</html>
