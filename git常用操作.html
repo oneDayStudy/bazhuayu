@@ -50,5 +50,19 @@
         <p>
             git merge dev：把dev分支合并到当前分支里
         </p>
+        <p>
+            find ./ -type f -size +102400k:查找当前文件大于100m 的文件
+        </p>
+        <h2>
+            github 限制在1G，单个文件不能超过100M，有50M的文件，就会警告了。
+
+所以在上传代码时要记得把一些大的tag文件去掉，如SourceInsight工程文件
+
+ctags等
+
+可通过以下命令查找超过100M的文件
+
+find ./ -type f -size +102400k
+        </h2>
     </body>
 </html>
