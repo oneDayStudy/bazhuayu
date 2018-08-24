@@ -1,0 +1,17 @@
+<html>
+    <head></head>
+    <body>
+      
+        <div>
+         1：打开github登录并新建一个仓库   
+         2：打开本地文件夹（需要关联到远程的文件夹）-》git init （初始化仓库）-》输入git remote add origin git@gihub.com:(yourgithubname/yourgitname).git
+         注意：加入你的git之前已经关联了一个github，可以改变，所以最好直接输入 git remote set-url origin git@gihub.com:(yourgithubname/yourgitname).git
+         3：把本地git内容add到工作区（不然直接push 会失败提示为空）git add . 
+         注意：add . 如果报错 （提示warning: LF will be replaced by CRLF in .idea）
+         这是Linux下换行符LF在window下为CRLF
+         解决方法为：运行如下代码git config core.autocrlf false即可
+         4：git commit -m 'msg'
+         5: git push -u origin master (第一次要添加 -u 之后 便关联起来 并可以省略了)
+        </div>
+    </body>
+</html>
