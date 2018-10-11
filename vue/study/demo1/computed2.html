@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <script src="./vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+          
+           <p>姓名:{{fullname}}</p>
+           <button v-on:click="changename">changename</button>
+        </div>
+        <script>
+           
+        var app = new Vue({
+            el:"#app",
+            data:{
+            firstname:'jack',
+            lastname:'green'   
+            },
+           computed:{
+            fullname:{
+                get:function(){
+                    return this.firstname+ ' '+this.lastname;
+                },
+                set:function(v){
+                    var names = v.split(' ')
+                    this.firstname = names[0]
+                    this.lastname=names[names.length-1]
+                }
+            }
+           },
+           methods:{
+               changename:function(){
+                console.log(this.firstname,"fisttname")
+                   console.log(this.lastname,'lastname')
+                   this.fullname = 'aaabbb ccc'
+                   console.log(this.firstname,"fisttname")
+                   console.log(this.lastname,'lastname')
+               }
+            }
+        })
+        </script>
+    </body>
+</html>

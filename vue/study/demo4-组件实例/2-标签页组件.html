@@ -1,0 +1,161 @@
+<html>
+    <head>
+        <script src="./vue.js"></script>
+        <link rel="stylesheet" href="./css/style.css">
+    </head>
+    <body>
+    <div id="app">
+        <tabs v-model="activeKey">
+            <pane label="标签一" name="1">标签一的内容</pane>
+            <pane label="标签er" name="2">标签二的内容</pane>
+            <pane label="标3" name="3">标签三的内容</pane>
+        </tabs>
+
+
+     
+    </div>
+  
+    <script>
+          // pane.js:-------------------
+    Vue.component('pane',{
+        name:'pane',
+        template:`
+        <div class="pane" v-show="show">
+             <slot></slot>
+        </div>
+        `,
+        props:{
+            name:{
+                type:String
+            },
+            label:{
+                type:String,
+                default:""
+            }
+        },
+        data:function(){
+            return {
+                show:1
+            }
+        },
+        methods:{
+            updateNav:function(){
+                this.$parent.updateNav()
+            }
+        },
+        watch:{
+            label(){
+                this.updateNav();
+            }
+        },
+        mounted:function(){
+            this.updateNav()
+        }
+    })
+        // tabs.js:-------------------
+    Vue.component('tabs',{
+        template:`
+        <div class="tabs">
+            <div class="tabs-bar">
+                    <div
+                    :class="tabCls(item)"
+                    v-for="(item,index) in navList"
+                    @click="handleChange(index)"
+                    >
+                    label--{{item.label}}
+                    </div>
+            </div>
+            <div class="tabs-content">
+                <slot></slot>
+            </div>
+        </div>
+        `,
+        data:function(){
+            return {
+                navList:[],
+                currentValue:this.value
+            }
+        },
+        props:{
+            name:{
+                type:String
+            },
+            label:{
+                type:String,
+                default:""
+            },
+            value:{
+                type:[String,Number]
+            }
+        },
+        methods:{
+            tabCls:function(item){
+                return [
+                    'tabs-tab',{
+                        'tabs-tab-active':item.name ===this.currentValue
+                    }
+                ]
+            },
+            handleChange:function(index){
+                var nav = this.navList[index]
+                var name = nav.name
+                this.currentValue = name
+                this.$emit('input',name)
+                this.$emit('on-click',name)
+            },
+            updateNav:function(){
+                this.navList = []
+                var _this= this
+                this.getTabs().forEach(function(pane,index){
+                    _this.navList.push({
+                        label:pane.label,
+                        name:pane.name||index
+                    })
+                    if(!pane.name) pane.name = index
+                    if(index===0){
+                        if(!_this.currentValue){
+                            _this.currentValue = pane.name||index
+                        }
+                    }
+                })
+                // this.$parent.updateNav()
+                this.updateStatus();
+            },
+            updateStatus:function(){
+                var tabs = this.getTabs()
+                var _this = this
+                tabs.forEach(function(tab){
+                    return tab.show = tab.name===_this.currentValue
+                })
+            },
+            getTabs:function(){
+                return this.$children.filter(function(item){
+                    return item.$options.name ==='pane'
+                })
+            }
+        },
+        watch:{
+           value:function(val){
+               this.currentValue = val
+           },
+           currentValue:function(){
+               this.updateStatus()
+           }
+        },
+        mounted(){
+            this.updateNav()
+        }
+
+    })
+      
+        // ----------------------------------
+    var app = new Vue({
+        el:"#app",
+        data:{
+            activeKey:1
+        }
+    })
+    </script>
+    </body>
+   
+</html>

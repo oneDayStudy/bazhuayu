@@ -1,0 +1,76 @@
+
+<html>
+        <head>
+            <script src="./vue.js"></script>
+        </head>
+        <body>
+           <div id="app">
+               <button v-on:click="handler">change</button>
+               {{msg}}
+               <br>
+               ---------------
+            <my-list v-bind:slotcont = "msg" ref="slot1">
+               <h2 slot="header">
+                   标题
+               </h2>
+               <p>
+                   正文
+               </p>
+               <div slot="footer">底部信息</div>
+            </my-list>
+           </div>
+            <script>
+             Vue.component('my-list',{
+                 props:["slotcont"]
+                 ,
+                    template:`
+                    <div>
+                        <slot name="header"></slot>
+                        <slot></slot>
+                        <slot name="footer"></slot>
+                    </div>
+                    `,
+                    mounted:function(){
+                    this.cont = this.slotcont
+                    var header = this.$slots.header
+                    var main = this.$slots.default
+                    var footer = this.$slots.footer
+                    console.log(footer)
+                    console.log(footer[0].elm)
+                    console.log(footer[0].elm.innerHTML)
+                    footer[0].elm.innerHTML = this.cont
+                    console.log(this.cont)
+                    },
+                    data:function(){
+                    return {
+                        cont:""
+                    } 
+                    }
+                })
+            var app = new Vue({
+                el:"#app",
+                data:{
+                   books:[
+                       {name:'vue.js'},
+                       {name:'javascript'},
+                       {name:'css'},
+                       {name:'html'},
+                   ],
+                   msg:"2222222"
+                },
+                mounted:function(){
+
+                }
+               ,methods:{
+                   handler:function(){
+                       this.msg +=1
+                       console.log(this.$refs.slot1)
+                       this.$refs.slot1.$slots.footer[0].elm.innerHTML = this.msg
+                   }
+               }
+                })
+               
+               
+            </script>
+        </body>
+    </html>

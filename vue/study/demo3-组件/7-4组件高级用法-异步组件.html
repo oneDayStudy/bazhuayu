@@ -1,0 +1,57 @@
+
+<html>
+        <head>
+            <script src="./vue.js"></script>
+        </head>
+        <body>
+           <div id="app">
+                <component :is="currentView1"></component>
+                <component :is="currentView"></component>
+                --
+                <component3></component3>
+           
+           ----
+        </div>
+            <script>
+            Vue.component('component1',function(resolve,reject){
+                window.setTimeout(function(){
+                    console.log(123)
+                    resolve({
+                        template:`
+                        <div>我是异步加载的组件1</div>
+                        `
+                    })
+                },2000)
+            })
+            Vue.component('component2',function(resolve,reject){
+                window.setTimeout(function(){
+                    console.log(456)
+                    resolve({
+                        template:`
+                        <div>我是异步加载的组件2</div>
+                        `
+                    })
+                },4000)
+            })
+            Vue.component('component3',function(resolve,reject){
+                window.setTimeout(function(){
+                    console.log(789)
+                    resolve({
+                        template:`
+                        <div>我是异步加载的组件3</div>
+                        `
+                    })
+                },6000)
+            })
+            var app = new Vue({
+                el:"#app",
+                data:{
+                    currentView1:'component1',
+                    currentView:'component2'
+                }
+                })
+               
+               
+            </script>
+        </body>
+    </html>

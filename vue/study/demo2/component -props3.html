@@ -1,0 +1,43 @@
+<html>
+    <script src="./vue.js"></script>
+    <body>
+            
+        <div id="app">
+       
+         <my-com :width='100'></my-com>
+        </div>
+       ----
+      
+    </body>
+    <script>
+       
+        Vue.component('my-com',{
+            template:`
+            <div :style="style">
+              zujianneirong
+            </div>
+            `,
+            props:['width'],
+            data:function(){
+               return {
+               }
+            },
+            computed:{
+                style:function(){
+                    return {
+                        width:this.width+100+'px',
+                        height:300+"px",
+                        background:"pink"
+                    }
+                }
+            }
+        })
+     var app = new Vue({
+         el:"#app",
+         data:{
+           cont:333
+         }
+     })
+      
+    </script>
+</html>

@@ -1,0 +1,48 @@
+
+<html>
+        <head>
+            <script src="./vue.js"></script>
+        </head>
+        <body>
+           <div id="app">
+            <my-list v-bind:books="books">
+                <!-- 作用域插槽也可以是具名的slot -->
+                <template slot="book" scope="props">
+                    {{props.bookName}}
+                </template>    
+            </my-list>
+           </div>
+            <script>
+             Vue.component('my-list',{
+                    props:{
+                        books:{
+                            type:Array,
+                            default:function(){
+                                return []
+                            }
+                        }
+                    },
+                    template:`
+                    <div>
+                        <slot name="book" v-for="book in books" v-bind:book-name="book.name"></slot>
+                    </div>
+                    `,
+
+                })
+               
+            var app = new Vue({
+                el:"#app",
+                data:{
+                   books:[
+                       {name:'vue.js'},
+                       {name:'javascript'},
+                       {name:'css'},
+                       {name:'html'},
+                   ]
+                },
+                })
+               
+               
+            </script>
+        </body>
+    </html>

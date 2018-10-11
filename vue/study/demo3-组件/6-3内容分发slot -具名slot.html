@@ -1,0 +1,87 @@
+
+<html>
+        <head>
+            <script src="./vue.js"></script>
+        </head>
+        <body>
+           <div id="app">
+                <com-a>
+                    <h2 slot= 'header'>标题</h2>
+                   
+                    <div slot="footer">底部信息</div>
+                    </com-a>
+           </div>
+           ---
+         
+            <script>
+            //    var bus = new Vue()
+                Vue.component('com-a',{
+                    template:`
+                    <div>
+                       子组件
+                         <slot name="other">
+                             <p>如果父组件没有插入内容，我将作为默认出现</p>
+                         </slot>
+                         ----**********
+                         <div class="container">
+              <div class="header">
+                  <slot name="header"></slot>
+              </div>
+              <div class="main">
+                  <slot>
+                        <p>正文</p>
+                        <p>更多正文</p>
+                  </slot>
+              </div>
+              <div class="footer">
+                <slot name="footer">
+                </slot>
+              </div>
+          </div>
+                    </div>
+                    `
+                   ,data:function(){
+                       return {
+                           msg:"子组件a信息",
+                       }
+                   }
+                })
+                Vue.component('com-b',{
+                    template:`
+          <div>comb</div>
+                    
+                    `,
+                    data:function(){
+                        return{
+                            mms:"zizujian b mssg"
+                        }
+                    }
+                })
+            var app = new Vue({
+                el:"#app",
+                data:{
+                    message:'123',
+                    showchild:1
+                    // <!--slot 作用域在父组件 -->
+                },
+                methods:{
+                    handleRef:function(){
+                        var msg = this.$refs.coma.msg
+                        console.log(msg)
+                        this.message = msg + "--"+  this.$refs.comb.mms
+                    }
+                },
+                // mounted:function(){
+                //     var _this = this;
+                //     bus.$on('on-message',function(msg){
+                //         _this.message = msg
+                //     })
+                // }
+                mounted:function(){
+                    console.log("ref-comb-",this.$refs.comb)
+                    console.log("ref-p-",this.$refs.p)
+                }
+            })
+            </script>
+        </body>
+    </html>

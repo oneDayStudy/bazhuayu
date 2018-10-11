@@ -1,0 +1,60 @@
+<html>
+    <script src="./vue.js"></script>
+    <body>
+        <div id="app">
+            <input type="radio" v-model="picked" v-bind:value="value" v-on:click="handle">
+            <label>单选</label>
+            <p>{{picked}}</p>
+            <p>{{value}}</p>
+            <br>
+            ------
+            <br>
+            <input type="checkbox"
+            v-model="toggle"
+            :true-value="value1"
+            :false-value="value2">
+            <label for="">复选框</label>
+            <p>{{toggle}}</p>
+            <p>{{value1}}</p>
+            <p>{{value2}}</p>
+            ----------
+            <br>
+            <select name="" id="" v-model="selected">
+                <option :value="{num:123}">123</option>
+                <option :value="num">4</option>
+                
+            </select>
+            <p>{{selected.num}}</p>
+            -------------------
+            <br>
+            <input type="text" v-model.lazy="mess">
+            <p>{{mess}}</p>
+            -------------------
+            <br>
+            <input type="text" v-model.number = "number">
+            <p>{{number}}</p>
+        </div>
+    </body>
+    <script>
+      var app = new Vue({
+          el:"#app",
+          data:{
+            picked:false,
+            value:1232,
+            toggle:false,
+            value1:"a",
+            value2:"b",
+            selected:'',
+            num:{num:"aaa"},
+            mess:"",
+            number:123
+          },
+          methods:{
+            handle:function(){
+                this.picked = !this.picked
+                this.value+=1
+            }
+          }
+      })
+    </script>
+</html>

@@ -1,0 +1,44 @@
+
+<html>
+        <head>
+            <script src="./vue.js"></script>
+        </head>
+        <body>
+           <div id="app">
+              
+            <child-component inline-template>
+                <!-- 里面相当于在子组件的template声明的 -->
+                <div>
+                    <h2>在父组件中定义子组件的模板</h2>
+                    <!-- <p>{{message}}</p> 此处渲染不出因为是父作用域的-->
+                    <p>{{msg}}</p>
+                </div>
+            </child-component>
+           </div>
+           ----
+           
+            <script>
+             Vue.component('child-component',{
+                    // template:`
+                    //         <div class="child">
+                               
+                    //         </div>
+                    // `,
+                    data:function(){
+                        return {
+                            msg:"在子组件声明的数据"
+                        }
+                    }
+                })
+            var app = new Vue({
+                el:"#app",
+                data:{
+                 message:"在父组件声明的数据"
+                },
+               
+                })
+               
+               
+            </script>
+        </body>
+    </html>

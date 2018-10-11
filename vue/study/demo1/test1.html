@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <script src="./vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" v-model='name' placeholder="your name">
+            <h1>hello:{{name}}</h1>
+            <h2>time:{{time}}</h2>
+            <span v-html='link'></span>
+            <a href="#">{{link}}</a>
+            <span v-pre>bubei bianyi:{{link}}</span>
+            <p>{{a/10}}</p>
+            <p>{{isOk?'确定':'取消'}}</p>
+            <p>{{text.split(',').reverse().join(',')}}</p>
+        </div>
+        <script>
+            var padDate = function(value){
+                return value<10?'0'+value:value
+            }
+        var app = new Vue({
+            el:"#app",
+            data:{
+                name:" 12",
+                a:1,
+                time:new Date(),
+                link:'<a href="#">this is link</a>',
+                text:'123,4,5,5,6',
+                data:new Date()
+            },
+            filter:{
+                formate:function(v){
+                    var date = new Date(v)
+                    var year = date.getFullYear();
+                    var month = padDate(date.getMonth()+1)
+                    var day = padDate(date.getDate)
+                    var hours = padDate(date.getDate())
+                    var minutes = padDate(date.getHours())
+                    var seconds = padDate(date.getSeconds())
+                    return year +'-' + month +'-' +day+' '+hours +':'+minutes + ':' +seconds;
+                }
+            },
+            mounted:function(){
+                console.log(this.$el)
+                console.log("mounted",new Date())
+                var _this = this;
+                this.time = setInterval(function(){
+                    _this.time = new Date()
+                },1000)
+            },
+            created:function(){
+                console.log("created")
+            },
+            beforeDestroy:function(){
+                console.log("beforedestroy")
+            }
+        })
+       console.log(app.a)
+        </script>
+    </body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <script src="./vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+       <div v-if="show">app</div>
+        <div v-on:click="handle">click</div>
+        </div>
+        <script>
+           
+        var app = new Vue({
+            el:"#app",
+            data:{
+                name:" 12",
+               show:1
+            },
+            
+            created:function(){
+               
+                    
+            },
+            mounted:function(){
+                    var _this = this
+                setTimeout(function(){
+                    _this.show=0
+                },2000)
+                this.init()
+            },
+            beforeDestroy:function(){
+            },
+            methods:{
+                handle:function(){
+                    this.close()
+                },
+                close:function(){
+                    this.show=true;
+                },
+                init:function(){
+                    console.log("init----")
+                }
+            }
+        })
+        app.init()
+        </script>
+    </body>
+</html>

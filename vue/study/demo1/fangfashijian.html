@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <script src="./vue.js"></script>
+    </head>
+    <body>
+        <div id="app" v-cloak>
+           <a href="http://www/baidu.com" @click="handle('jinzhi open',$event)">open baidu</a>
+        </div>
+        ----------------------------
+       
+      
+        <script>
+        var app1 = new Vue({
+            el:"#app",
+            data:{
+              
+            },
+           computed:{
+           
+            
+           },
+           methods:{
+           handle:function(mess,e){
+               e.preventDefault();
+               console.log(e)
+               console.log(this.$event)
+               console.log(mess)
+               mess = 'new mess'
+               console.log(mess)
+           }
+            }
+        })
+        
+        </script>
+        <style>
+       
+        </style>
+    </body>
+</html>

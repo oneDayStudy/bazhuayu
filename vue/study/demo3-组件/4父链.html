@@ -1,0 +1,40 @@
+
+<html>
+    <head>
+        <script src="./vue.js"></script>
+
+    </head>
+    <body>
+       <div id="app">
+           {{message}}
+           <com-a></com-a>
+       </div>
+       ---
+        <script>
+        //    var bus = new Vue()
+            Vue.component('com-a',{
+                template:`
+                <button @click='handleEvent'>通过父链直接修改数据</button>
+                
+                `
+                ,methods:{
+                    handleEvent:function(){
+                      this.$parent.message = "来自组件coma 的内容"
+                    }
+                }
+            })
+        var app = new Vue({
+            el:"#app",
+            data:{
+                message:'123'
+            },
+            // mounted:function(){
+            //     var _this = this;
+            //     bus.$on('on-message',function(msg){
+            //         _this.message = msg
+            //     })
+            // }
+        })
+        </script>
+    </body>
+</html>

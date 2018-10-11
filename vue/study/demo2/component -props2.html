@@ -1,0 +1,35 @@
+<html>
+    <script src="./vue.js"></script>
+    <body>
+            
+        <div id="app">
+       
+         <my-com :init-count="cont"></my-com>
+        </div>
+       ----
+      
+    </body>
+    <script>
+       
+        Vue.component('my-com',{
+            template:`
+            <div>
+                {{count}}
+            </div>
+            `,
+            props:['initCount'],
+            data:function(){
+               return {
+                   count:this.initCount
+               }
+            }
+        })
+     var app = new Vue({
+         el:"#app",
+         data:{
+           cont:333
+         }
+     })
+      
+    </script>
+</html>

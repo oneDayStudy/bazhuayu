@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <script src="./vue.js"></script>
+    </head>
+    <body>
+        <div id="app" v-cloak>
+          <div class="a2" v-bind:class="{'active1':isActive,'error':isError}">class object bind</div>
+          <button v-on:click='active' v-bind:class="classes">change</button>
+          <div>text countent</div>
+        </div>
+        <script>
+        var app1 = new Vue({
+            el:"#app",
+            data:{
+                isActive:true,
+                isError:true
+            },
+           computed:{
+            classes:function(){
+                return {
+                    bb:this.isActive,
+                    cc:this.isActive
+                }
+            }
+            
+           },
+           methods:{
+           active:function(){
+               this.isActive=!this.isActive;
+           }
+            }
+        })
+       
+        </script>
+        <style>
+        .active1{color:pink;}
+        [v-cloak]{
+            display: none;
+        }
+        </style>
+    </body>
+</html>

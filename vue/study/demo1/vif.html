@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <script src="./vue.js"></script>
+    </head>
+    <body>
+        <div id="app" v-cloak>
+          <template v-if="type==='name'">
+              <label for="">username</label>
+              <input type="text" placeholder="enteryourname">
+          </template>
+          <template v-else>
+            <label for="">email</label>
+            <input type="email" placeholder="enteryouremeail">
+          </template>   
+          <button v-on:click="handle"> change input</button>
+        </div>
+        ----------------------------
+        <div class="app2">
+            <template v-if="type==='name'">
+                <label for="">username:</label>
+                <input type="text" placeholder="username" key="username">
+            </template>
+            <template v-else>
+                <label for="">email</label>
+                <input type="email" placeholder="email" key="mail">
+            </template>
+            <button @click="handle">
+                click to change
+            </button>
+        </div>
+        <script>
+        var app1 = new Vue({
+            el:"#app",
+            data:{
+                type:'name'
+            },
+           computed:{
+           
+            
+           },
+           methods:{
+            handle:function(){
+                this.type = this.type==='name'?'mail':'name'
+            }
+            }
+        })
+       var app2 = new Vue({
+           el:'.app2',
+           data:{
+               type:'name'
+           },
+           methods:{
+               handle:function(){
+                   this.type = this.type==='name'?'mail':'name'
+               }
+           }
+
+       })
+        </script>
+        <style>
+       
+        </style>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<html>
+    <script src="./vue.js"></script>
+    <body>
+        <div id="app">
+{{msg}}
+click:{{counter}} 
+<p>
+    <button @click="counter++">+1</button>
+</p>
+<p>
+    <button @click="handleAdd()">+1</button>
+    <button @click="handleAdd(10)">+10</button>
+</p>
+<p>
+    <a href="http://www.baidu.com" @click="handler($event)">dakai baidu lianjie</a>
+</p>
+<p>
+        <a href="http://www.baidu.com" @click.stop.prevent="handler2">dakai baidu lianjie</a>
+    </p>
+
+        </div>
+        
+    </body>
+    <script>
+       var app =  new Vue({
+            el:'#app',
+            data:{
+                msg:123,
+                counter:0
+            },
+            methods:{
+                handleAdd:function(count){
+                    count = count||1;
+                    this.counter+=count
+                },
+                handler:function(e){
+                    e.preventDefault()
+                },
+                handler2:function(){
+                    console.log("preventdefault")
+                }
+            }
+        })
+    console.log(app)
+    </script>
+</html>

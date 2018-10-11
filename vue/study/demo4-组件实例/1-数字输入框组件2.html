@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <script src="./vue.js"></script>
+    </head>
+    <body>
+       
+        -----
+      
+     <div id="app">
+        <my-input v-model="msg"></my-input>
+       <p>父元素检测子变化--{{msg}}</p>
+     </div>
+        <script>
+            
+// 组件-----------------------------
+function isValueNumber(value){
+    return (/(^-?[0-9]+\.{1}\d+$)|(^-?[1-9][0-9]*$)|(^-?0{1}$)/).test(value)
+}
+Vue.component('my-input',{
+    props:{
+        value:{
+            type:Number,
+            default:0
+        }
+    },
+    data:function(){
+        return{
+            currentValue:this.value
+        }
+    },
+    template:`
+    <div class="my-input">
+            <input type="text" @change="handleChange" v-bind:value="currentValue">
+            <button @click="handleDown">-</button>
+            <button @click="handleUp">+</button>
+    </div>
+    `,
+    methods:{
+        handleChange:function(event){
+            var val = event.target.value.trim()
+            console.log(event,event.target,event.target.value)
+            val = Number(val)
+            this.currentValue = val
+        },
+        handleDown:function(val){
+            this.currentValue-=1
+        },
+        handleUp:function(val){
+            this.currentValue+=1
+        },
+       updateValue:function(val){
+           this.currentValue = val
+       },
+     
+    },
+    watch:{
+           currentValue:function(v){
+               this.$emit('input',v)
+           },
+           value:function(v){
+               this.updateValue(v)
+           }
+       }
+})
+// -------------------------------------
+        var app = new Vue({
+            el:"#app",
+            data:{
+               msg:1
+            }
+        })
+        </script>
+    </body>
+</html>

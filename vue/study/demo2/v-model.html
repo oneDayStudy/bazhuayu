@@ -1,0 +1,110 @@
+<html>
+    <script src="./vue.js"></script>
+    <body>
+        <div id="app">
+           <input type="text" v-model="message" placeholder="enter">
+           <textarea name="" id="" cols="30" rows="10" v-model="text"></textarea>
+           <p>{{message}}</p>
+           <p>{{text}}</p>
+           <input type="text" @input="handleInput" placeholder='ennter'>
+           <p>{{message2}}</p>
+           <input type="radio" v-bind:checked="picked" v-on:click="change">
+           <br>
+           单选
+           --------------
+            <br>
+           <input type="radio" v-model="pick" value="html" id="html">
+           <label for="html">html</label>
+           <br>
+           <input type="radio" v-model="pick" value="js" id="js">
+           <label for="js">js</label>
+           <br>
+           <input type="radio" v-model="pick" value="css" id="css">
+           <label for="css">css</label>
+            <br>
+           <p>
+               选这项：{{pick}}
+        
+            </p>
+            <br>
+复选
+--------------------------
+<br>
+            <input type="checkbox" v-model="checked1" id="checked">
+            <label for="checked1">选择状态：{{checked1}}</label>
+<br>
+-------------------------------
+<br>
+            <input type="checkbox" v-model="checked" value="html">
+            <label for="html">html</label>
+            <br>
+            <input type="checkbox" v-model="checked" value="js">
+            <label for="js">js</label>
+            <br>
+            <input type="checkbox" v-model="checked" value="css">
+            <label for="css">css</label>
+            <br>
+            <p>=={{checked}}</p>
+
+
+<br>
+下拉选择列表
+------------------------------
+<br>
+            <select name="" id="" v-model="selected">
+                <option>html</option>
+                <option value="js">js</option>
+                <option value="css">css</option>
+            </select>
+            <p>=={{selected}}</p>
+
+            <select name="" v-model="selected2" multiple id="">
+                <option>html</option>
+                <option value="js">javascript</option>
+                <option>css</option>
+                
+            </select>
+            <br>
+            <p>=={{selected2}}</p>
+            --------------
+            <select name="" id="" v-model="selected3">
+                <option v-for="op in options" v-bind:value = "op.value">
+                    {{op.text}}
+                </option>
+            </select>
+            <p>{{selected3}}</p>
+        </div>
+    </body>
+    <script>
+      var app = new Vue({
+          el:"#app",
+          data:{
+              message:"",
+              text:""
+              ,message2:"",
+              picked:true,
+              pick:"css",
+              checked1:false,
+              checked:[
+
+              ],
+              selected:"css",
+              selected2:["html","js","css"],
+              selected3:"html",
+              options:[
+                  {text:"html",value:"html"},
+                  {text:"js",value:"javascript"},
+                  {text:"css",value:"css"},
+              ]
+          },
+          methods:{
+              handleInput:function(e){
+                  this.message2= e.target.value;
+              },
+              change:function(){
+                  this.picked=!this.picked;
+              }
+          }
+      })
+    </script>
+</html>

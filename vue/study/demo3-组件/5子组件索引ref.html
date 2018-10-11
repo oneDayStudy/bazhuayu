@@ -1,0 +1,66 @@
+
+<html>
+    <head>
+        <script src="./vue.js"></script>
+
+    </head>
+    <body>
+       <div id="app">
+        {{message}}
+        <button @click="handleRef">通过ref获取子组件实例</button>
+        <com-a ref = 'coma'></com-a>
+        <com-b ref = 'comb'></com-a>
+            <p ref ="p"></p>
+       </div>
+       ---
+        <script>
+        //    var bus = new Vue()
+            Vue.component('com-a',{
+                template:`
+                <div>
+                    子组件
+                </div>
+                `
+               ,data:function(){
+                   return {
+                       msg:"子组件a信息"
+                   }
+               }
+            })
+            Vue.component('com-b',{
+                template:`
+      <div>comb</div>
+                
+                `,
+                data:function(){
+                    return{
+                        mms:"zizujian b mssg"
+                    }
+                }
+            })
+        var app = new Vue({
+            el:"#app",
+            data:{
+                message:'123'
+            },
+            methods:{
+                handleRef:function(){
+                    var msg = this.$refs.coma.msg
+                    console.log(msg)
+                    this.message = msg + "--"+  this.$refs.comb.mms
+                }
+            },
+            // mounted:function(){
+            //     var _this = this;
+            //     bus.$on('on-message',function(msg){
+            //         _this.message = msg
+            //     })
+            // }
+            mounted:function(){
+                console.log("ref-comb-",this.$refs.comb)
+                console.log("ref-p-",this.$refs.p)
+            }
+        })
+        </script>
+    </body>
+</html>

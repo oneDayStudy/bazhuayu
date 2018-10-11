@@ -1,0 +1,40 @@
+<html>
+    <script src="./vue.js"></script>
+    <body>
+            
+        <div id="app">
+         <my-com message="来自父组件的数据111" mess2="222" w-t="tishi" v-bind:dt-ms="miss" nessages="[1,2,3,4,5,6,7]"></my-com>
+         <input type="text" v-model="miss">
+         --
+         <my-com nessages = "[1,2,3,4]"></my-com>
+         <my-com :nessages = "[1,2,3,4]"></my-com>
+        </div>
+       ----
+      
+    </body>
+    <script>
+       
+        Vue.component('my-com',{
+            template:`
+            <div>
+                    <p>{{message}}--{{mess2}}--{{wT}}--{{dtMs}}</p>
+                    <br>
+                    *********
+                    <br>
+                    <p>{{nessages}}--{{nessages.length}}</p>
+            </div>
+            `,
+            props:['message','mess2','wT','dtMs',"nessages"],
+            data:function(){
+               return {}
+            }
+        })
+     var app = new Vue({
+         el:"#app",
+         data:{
+             miss:''
+         }
+     })
+      
+    </script>
+</html>

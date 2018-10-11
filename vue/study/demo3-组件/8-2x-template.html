@@ -1,0 +1,30 @@
+
+<html>
+        <head>
+            <script src="./vue.js"></script>
+        </head>
+       
+        <body>
+           <div id="app">
+                <my-component></my-component>
+                
+            </div>
+            <script type='text/x-template' id="my-com">
+                <div>这是组件的内容
+                        <p>zhengwen</p>
+                        <h2>title</h2>
+                </div>
+            </script> 
+            <script>
+                Vue.component('my-component',{
+                    template:'#my-com'
+                })
+            var app = new Vue({
+                el:"#app",
+                })
+               
+               
+            </script>
+            
+        </body>
+    </html>

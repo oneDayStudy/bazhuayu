@@ -1,0 +1,34 @@
+<html>
+    <script src="./vue.js"></script>
+    <body>
+            
+        <div id="app">
+         <my-com></my-com>
+         <my-com></my-com>
+         <my-com></my-com>
+         <my-com></my-com>
+        </div>
+       ----
+      
+    </body>
+    <script>
+        var counter={
+            counter:0
+        }
+        Vue.component('my-com',{
+            template:`
+            <div>
+                    <button @click="counter++">{{counter}}</button>
+            </div>
+            `,
+            data:function(){
+                return counter
+            }
+        })
+     var app = new Vue({
+         el:"#app",
+         
+     })
+      
+    </script>
+</html>

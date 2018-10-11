@@ -1,0 +1,67 @@
+<html>
+    <script src="./vue.js"></script>
+    <body>
+            
+        <div id="app">
+            <my-com></my-com>
+            <child-com></child-com>
+            
+        </div>
+        <div id="app2">
+                <my-com></my-com>
+                <child-com></child-com>
+                --------
+                <br>
+                <table>
+                    <tbody is="my-component">
+                        <tr>
+                            <td>123</td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+       
+    </body>
+    <script>
+        var child = {
+          template:`
+          <div>child component--{{mess}}</div>
+          `,
+          data:function(){
+              return {
+                  mess:"this is mess in component1"
+              }
+          }
+      }
+    Vue.component("my-com",{
+        template:`
+        <div> <p>my component --{{mess}}</p></div>
+        `,
+        data:function(){
+            return {
+                mess:"mess in com2"
+            }
+        }
+    })
+    Vue.component('my-component',{
+        template:`
+        <div>this is component content ==={{mess}}</div>
+        `,
+        data:function(){
+            return {
+                mess:"new miss in my-component"
+            }
+        }
+    })
+      var app = new Vue({
+          el:"#app"
+      })
+      var app2 = new Vue({
+          el:"#app2"
+          ,components:{
+              "child-com":child
+          }
+      })
+      
+    </script>
+</html>

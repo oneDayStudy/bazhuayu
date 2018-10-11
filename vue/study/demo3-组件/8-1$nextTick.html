@@ -1,0 +1,45 @@
+
+<html>
+        <head>
+            <script src="./vue.js"></script>
+        </head>
+        <body>
+           <div id="app">
+               <div id="div" v-if="showDiv">这是div1内容</div>
+               <!-- 未知渲染首次会报错 -->
+               <button @click="getTextFalse">获取div内容（未知渲染）</button>
+               <button @click="getTextTrue">获取div内容(渲染后)</button>
+            <br>
+           ----
+           <p>div neirong--{{divText}}</p>
+        </div>
+            <script>
+            var app = new Vue({
+                el:"#app",
+                data:{
+                  showDiv:false,
+                  divText:""
+                },
+                methods:{
+                    getTextFalse:function(){
+                        this.showDiv = true
+                        var text = document.getElementById("div").innerHTML
+                            console.log(text)
+                            this.divText = text
+                    },
+                    getTextTrue:function(){
+                        this.showDiv = true
+                        // 检测到dom更新完成后的代码
+                        this.$nextTick(function(){
+                            var text = document.getElementById("div").innerHTML
+                            console.log(text)
+                            this.divText = text
+                        })
+                    }
+                }
+                })
+               
+               
+            </script>
+        </body>
+    </html>

@@ -1,0 +1,45 @@
+
+<html>
+        <head>
+            <script src="./vue.js"></script>
+        </head>
+        <body>
+           <div id="app">
+                <component :is="currentView"></component>
+           
+           <button @click="handleChangeView('A')">A</button>
+           <button @click="handleChangeView('B')">B</button>
+           <button @click="handleChangeView('C')">C</button>
+           ----
+          
+        </div>
+            <script>
+            
+            var app = new Vue({
+                el:"#app",
+                data:{
+                    currentView:'comA'
+                },
+                methods:{
+                    handleChangeView:function(component){
+                        this.currentView='com'+component
+                    }
+                },
+               components:{
+                   comA:{
+                       template:` <div>zujian AAA</div>`
+                   },
+                   comB:{
+                    template:` <div>zujian BBBBB</div>`
+                   },
+                   comC:{
+                    template:` <div>zujian ccccc</div>`
+                   }
+               }
+
+                })
+               
+               
+            </script>
+        </body>
+    </html>

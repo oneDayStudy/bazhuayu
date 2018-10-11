@@ -1,0 +1,44 @@
+
+<html>
+        <head>
+            <script src="./vue.js"></script>
+        </head>
+        <body>
+           <div id="app">
+            <com-a>
+                  <template scope="props">
+                      <p>来自父组件的内容</p>
+                      <p>{{props.msg}}--{{props}}</p>
+                      <p>{{props.data}}</p>
+                  </template>
+                
+                 
+            </com-a>
+           </div>
+            <script>
+             Vue.component('com-a',{
+                    template:`
+                    <div>
+                      <slot msg="子组件的msg" v-bind:data="msg">
+                        <p >p</p>
+                      </slot>
+                    </div>
+                    `
+                   ,data:function(){
+                       return {
+                           msg:"hello"
+                       }
+                   }
+                })
+               
+            var app = new Vue({
+                el:"#app",
+                data:{
+                   
+                },
+                })
+               
+               
+            </script>
+        </body>
+    </html>
