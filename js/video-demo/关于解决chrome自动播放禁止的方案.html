@@ -1,0 +1,41 @@
+<html>
+    <body>
+        
+        参考：<a href="https://blog.csdn.net/joyce_lcy/article/details/81508340">https://blog.csdn.net/joyce_lcy/article/details/81508340</a>
+
+        2018年4月Google出台了关于Chrome自动播放的限制
+        在chrome浏览器中页面加载完成之后播放视频会失败，并且出现如下报错：
+        test.html:69 Uncaught (in promise) DOMException: play() failed because the user didn't interact with the document first
+
+        解决方案:
+        1:静音播放 
+        针对网页中比较常见的video作为background的情况，并不希望用户感受到这是个视频或者去点击播放按钮。所以，最简便的方法是将视频直接静音，保证其能自动播放。
+        <video id="video" muted autoplay src="..."></video>
+        静音播放，提供关闭静音按钮
+        <button id="unmute" onClick="document.getElementById('video').muted = false;"></button>
+        不自动播放，提供播放按钮 
+        对于不希望静音的视频，可以显示播放按钮，用户点击播放按钮后再进行播放。
+
+        2:代码实现
+        可以通过play方法返回的Promise（什么是Promise?）判断是否播放被禁止了。如果禁止了，静音后再播放或者显示播放按钮。
+        var mp4 = document.getElementById('video');
+            var promise = mp4.play();
+
+            if (promise !== undefined) {
+            promise.then(function(){
+                // Autoplay started!
+
+            }).catch(function() {
+                // Autoplay was prevented.
+
+                //--静音再播放--
+                mp4.muted=true;
+                mp4.play();
+
+                //--显示播放按钮--
+                //show a "Play" button so that user can start playback.
+            });
+            }
+
+    </body>
+</html>
