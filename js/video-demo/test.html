@@ -5,11 +5,11 @@
         <div class="media-box">
                 <div class="video-box">
                     <h2>这个是可控制的视频</h2>
-                    <video class="video" src="test.mp4" width="600" height="450" controls></video>
+                    <video class="video" src="test.mp4" width="600" height="450"></video>
                     <h2>这个是自动循环播放的正常播放视频</h2>
-                    <video class="video2" src="test.mp4" width="600" height="450" muted autoplay loop></video>
+                    <video class="video2" src="test.mp4" width="600" height="150" muted autoplay loop></video>
                     <h2>这个是慢速播放的循环视频</h2>
-                    <video class="video3" src="test.mp4" width="600" height="450" autoplay loop></video>
+                    <video class="video3" src="test.mp4" width="600" height="150" autoplay loop muted></video>
                     <div class="video-control">
                         <!-- <nav>
                             <a href="javascript:void(0);" onclick="moviePlay()">播放</a>
@@ -32,6 +32,20 @@
  var $video = $(".video");
 var video = $video[0];
 console.log(1,$video)
+$(".video").on('mouseover',function(){
+    console.log(video.controls)
+    video.controls = true
+})
+$(".video").on('mouseout',function(){
+    console.log(video.controls)
+    video.controls = false
+})
+// 播放完成后检测
+$(".video").on('ended',function(){
+    console.log("end video")
+    video.controls = false
+})
+
 function moviePlay() {
     video.play();
 }
@@ -55,18 +69,5 @@ function movieClose() {
     $(".media-box").css("display", "none");
 }
 // -----
-var $video3 = $(".video3")
-var video3 = $video3[0]
-video3.playbackRate = 0.5 * video.defaultPlaybackRate;
-var p = $(".video3")[0]
-console.log(p.muted)
-p.muted=true
-
-setInterval(function(){
-    // p.muted=false
-    console.log('play')
-    p.muted=false
-    $(".video3")[0].play()
-},2000)
-
+$('.video3')[0].playbackRate = 14.75* video.defaultPlaybackRate;
 </script>
