@@ -204,7 +204,6 @@
 						<div class="know">
 							<span>我知道了</span>
 						</div>
-
 					</div>
 
 				</div>
@@ -240,19 +239,25 @@ $(function(){
 		var xyb_price = $(".xyb_overage span").text();
 		yqb_price = parseFloat(yqb_price)
 		xyb_price = parseFloat(xyb_price)
-				$(".yqbVal").on("input propertypchange",function(){
+				$(".yqbVal").on("input propertypchange change",function(){
 					var inp = $(this).val()
 					inp = parseFloat(inp)
-					$(".yqb_overage span").text(yqb_price-inp)
-
+					if($(this).val()){
+						$(".yqb_overage span").text(yqb_price-inp)
+					}else{
+						//	防止NaN
+						$(".yqb_overage span").text(yqb_price)
+					}
 				})
-				$(".xybVal").on("input propertypchange",function(){
+				$(".xybVal").on("input propertypchange change",function(){
 					var inp = $(this).val()
 					inp = parseFloat(inp)
-					$(".xyb_overage span").text(xyb_price-inp)
+					if( $(this).val()){
+						$(".xyb_overage span").text(xyb_price-inp)
+					}else{
+						$(".xyb_overage span").text(xyb_price)
+					}
 				})
-
-
 //	yqbPay,xybPay,klPay,zfbPay
 	$(".yqbPay").on("click",function(){
 		if(!$(".yqbVal").val()&&!$(".xybVal").val()){
@@ -442,6 +447,41 @@ $(function(){
 			  $(".tip_mask").fadeOut()
 		  })
 	  })
+//	  时间倒计时
+	  $(function(){
+		  var systimer = $(".payremain span").html()
+		  systimer = parseInt(systimer)
+		  var SysSecond  =30
+		  var second = Math.floor(SysSecond % 60);
+		  var minite = Math.floor((SysSecond / 60) % 60);      //计算分
+		  var hour = Math.floor((SysSecond / 3600) % 24);      //计算小时
+		  var day = Math.floor((SysSecond / 3600) / 24);        //计算天
+		  $(".payremain span").html(day + "天" + hour + "小时" + minite + "分" + second + "秒");
+		  console.log(SysSecond )
+		  var InterValObj = window.setInterval(SetRemainTime,1000)
+
+		  var SysSecond;
+		  function SetRemainTime(){
+			  if(SysSecond){
+				  if (SysSecond > 0){
+					  SysSecond = SysSecond - 1;
+					   second = Math.floor(SysSecond % 60);
+					   minite = Math.floor((SysSecond / 60) % 60);      //计算分
+					   hour = Math.floor((SysSecond / 3600) % 24);      //计算小时
+					   day = Math.floor((SysSecond / 3600) / 24);        //计算天
+					  $(".payremain span").html(day + "天" + hour + "小时" + minite + "分" + second + "秒");
+					  if(SysSecond==0){
+						  console.log("vor")
+						  $(location).attr("href","yuqianbao_result1811zb.html")
+					  }
+				  }else if(SysSecond == 0){
+					  window.clearInterval(InterValObj);
+				  }
+			  }
+		  }
+
+	  })
+
   </script>
 </body>
 </html>
