@@ -26,9 +26,9 @@ background-size:100% }
 /*input list*/
 .y_inp{  width: 100%;margin-top:1.12rem;}
 .inp_list{width:8.72rem;height:1.006rem;border-bottom:1px solid #E0E0E0;margin:0 auto;position: relative; }
-.inp_list input{height:100%;width:6.72rem;font-size: 20px;border: none;}
-[data-dpr="2"] .inp_list input{font-size:40px}
-[data-dpr="3"] .inp_list input{font-size:60px}
+.inp_list input{height:100%;width:6.72rem;font-size: 14px;border: none;color:#B6B6B9;}
+[data-dpr="2"] .inp_list input{font-size:28px}
+[data-dpr="3"] .inp_list input{font-size:42px}
 .errorIcon{display: inline-block;width:0.426rem;height:0.426rem;background: url("../images/public_input_cleanText_icon@2x.png") no-repeat;
 background-size:100%;position:absolute;right:0;top:0.32rem;}
 .inp_list:nth-child(2){margin-top:0.64rem;}
@@ -84,7 +84,7 @@ position: fixed;bottom: 0;}
 [data-dpr="2"] .car_card{font-size:30px;}
 [data-dpr="3"] .car_card{font-size:45px;}
 .car_l{float:left;margin-left:0.4rem;}
-.car_r{float:right;margin-right:0.4rem;color:#999999}
+.car_r{float:right;margin-right:0.2rem;color:#999999}
 
 .car_card input{height:0.8rem;margin-right:0.1rem; text-align: right;border:none;}
 
@@ -100,7 +100,7 @@ position: fixed;bottom: 0;}
 .readchoisedIcon{display: inline-block;width:0.426rem;height:0.426rem;background: url("../images/icon_circle_checked@2x.png") no-repeat;
     background-size:100%;vertical-align: middle;margin-left:0.4rem;margin-right:0.21rem;margin-bottom:0.08rem; }
 .repeatsend{display: inline-block;
-    width:2.453rem;height:0.8rem;line-height:0.8rem;border-radius:0.106rem;border:0.013rem solid #1890FF;vertical-align: middle;margin-left:0.2rem;
+    width:2.553rem;height:0.8rem;line-height:0.8rem;border-radius:0.106rem;border:0.013rem solid #1890FF;vertical-align: middle;margin-left:0.2rem;
 font-size:13px;text-align: center;}
 [data-dpr="2"] .repeatsend{font-size:26px;}
 [data-dpr="3"] .repeatsend{font-size:39px;}
@@ -192,7 +192,7 @@ background-size:100%;vertical-align: middle;}
 .payInp{height:1.093rem;line-height: 1.093rem; width:8.25rem;background: #F0F3F5 ;border-radius:0.1rem;margin-top:0.32rem;
 margin-left:0.946rem;}
 .payInp span{margin-left:0.32rem;}
-.payInp input{border:none;height:1.093rem;line-height: 1.093rem;margin-left:0.1rem;width:6rem;background:#F0F3F5;font-size:13px;
+.payInp input{border:none;height:1.093rem;line-height: 1.093rem;margin-left:0.1rem;width:5rem;background:#F0F3F5;font-size:13px;
 }
 [data-dpr="2"] .payInp input{font-size:26px;}
 [data-dpr="3"] .payInp input{font-size:39px;}

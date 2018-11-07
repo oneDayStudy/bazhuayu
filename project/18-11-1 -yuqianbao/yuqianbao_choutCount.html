@@ -214,6 +214,22 @@
    <script type="text/javascript" src="./resource/javascript/global.js"></script>
   <!--2017/04/21新增js-->
   <script type="text/javascript">
+//	  功能介绍
+//	1：时间倒计时，获取指定的设置时间  SysSecond  =30 参数为秒
+
+//  2：点击每个select选择框图标切换
+//	3：点击鱼钱宝和小八信用宝支付出现可填写数字输入框
+// 4:输入框输入数字余额宝和小八信用宝的余额量都会跟随数字而相应减少
+//5：当再次点击按钮会收回对应的输入框并且本行输入框内容清空，余额也会回到原余额。
+//6：只有两个输入框都清空 鱼钱宝和小八信用宝都取消选择时底部按钮才会变灰色。
+//7:只要选择除了快捷支付和支付宝支付的任意一个，底部按钮都会显示可点击状态，勾选掉就会显示不可点击状态
+//8:鱼钱宝和小八信用宝只选中而没有输入金额 是不能够点击底部按钮 既底部按钮是非选择状态
+
+//9:  点击问好图标会弹出详细信息模态框。
+//10：点击选择银行弹出银行模态框
+//11：银行模态框内点击单选选中银行卡 点击银行卡（对应的列表部分）会选中银行 并且相应的信息立即更新到快捷支付的银行信息并一一对应
+//11-2：如果点击其他未勾选的银行卡，选择银行卡弹层不会消失。
+//12：选择添加新银行 则跳转到添加银行卡页面
 //	  初始化
 function initFn(){
 	$(".tip_mask").hide()
@@ -395,18 +411,33 @@ $(function(){
 	})
 
 })
-	$(function(){
-//	detail
 
-	})
 //	  更换银行卡
 	  $(function(){
 		  $(".changeCardBtn").on('click',function(){
 			  $(".chose_cards").fadeIn()
 		  })
 		  $(".cards_left").on('click',function(){
-			  $(".chose_cards").fadeOut()
+//			  第一种选择方式：
+//			  var yesC =$(this).siblings("input:checked").val()// if checed val is "on"
+//			  if(yesC){
+//				  $(".chose_cards").fadeOut()
+//			  }
+//			  第二种选择方式：
+//			 $(this).siblings("input").attr("checked","checked")
+			  $(this).siblings("input").click()
+			 var Timer4 = setTimeout(function(){
+				 $(".chose_cards").fadeOut()
+				 clearTimeout(Timer4)
+			 },300)
 		  })
+//		  点击区域外部关闭
+			$(".chose_cards").on("click",function(e){
+				e.stopPropagation()
+				if($(e.target).context.className =="chose_cards"){
+					$(".chose_cards").fadeOut()
+				}
+			})
 		  $(".inp_cards").on('click',function(){
 //		选择银行
 			  var cardname = $(this).parents(".cards_list").find(".cardName").text()
@@ -417,9 +448,9 @@ $(function(){
 			  var myusernum = $(".myCard").find("p:last").find("span:last").text(usernum)
 
 			  var Timer = setInterval(function(){
-//				  $(".chose_cards").fadeOut()
+				  $(".chose_cards").fadeOut()
 				 clearInterval(Timer)
-			 },5000)
+			 },300)
 		  })
 	  })
 //	  添加银行卡
@@ -451,7 +482,7 @@ $(function(){
 	  $(function(){
 		  var systimer = $(".payremain span").html()
 		  systimer = parseInt(systimer)
-		  var SysSecond  =30
+		  var SysSecond  =300
 		  var second = Math.floor(SysSecond % 60);
 		  var minite = Math.floor((SysSecond / 60) % 60);      //计算分
 		  var hour = Math.floor((SysSecond / 3600) % 24);      //计算小时

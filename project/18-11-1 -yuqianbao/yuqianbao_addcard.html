@@ -46,11 +46,11 @@
 					</li>
 					<li class="car_card">
 						<span class="car_l">验证码</span>
-						<span class="car_r"><input type="text" placeholder="输入短信验证码"> <a href="javascript:;" class="repeatsend">重新发送( <em>48</em> )</a></span>
+						<span class="car_r"><input type="text" placeholder="输入短信验证码"> <a href="javascript:;" class="repeatsend">重新发送 ( 48 )</a></span>
 					</li>
 				</ul>
 				<p class="readover">
-					<span><i class="readchoiseIcon"></i>我已阅读协议</span>
+					<i class="readchoiseIcon"></i><span>我已阅读协议</span>
 				</p>
 			</div>
 			<div class="addcard_footer">
@@ -76,16 +76,21 @@
         </style>
   <script type="text/javascript" src="./resource/javascript/jquery.min.js"></script>
    <script type="text/javascript" src="./resource/javascript/global.js"></script>
-  <!--2017/04/21新增js-->
+
   <script type="text/javascript">
+//	  功能介绍
+//1：点击选择银行按钮会弹出银行选择列表，并且图标切换向右箭头
+//2：选择一个银行会出现小角标，原银行栏目会实时更新为选择的银行
+//3点击选择银行（此时已经显示为具体银行）银行列表消失，箭头图标还原。
+
 	$(function(){
 	$(".readchoiseIcon").on('click',function(){
 		$(this).toggleClass("readchoisedIcon")
 	})
 //		选择银行卡
 		$(".chioseCar").on("click",function(){
-		$(".chioseCardBox").fadeToggle()
-		$(this).children(".chioseIcon").toggleClass("chioseIcon2")
+		$(".chioseCardBox").fadeIn()
+		$(this).children(".chioseIcon").addClass("chioseIcon2").removeClass("chioseIcon")
 
 	})
 	$(".chioseCardBox li span").on("click",function(){
@@ -96,6 +101,10 @@
 
 		var newCardName = $(this).text()
 		$(".chioseCar").find("em").text(newCardName)
+		$(".chioseCar i").addClass("chioseIcon").removeClass("chioseIcon2")
+		setTimeout(function(){
+			$(".chioseCardBox").fadeOut()
+		},150)
 	})
 	})
      $(function(){
