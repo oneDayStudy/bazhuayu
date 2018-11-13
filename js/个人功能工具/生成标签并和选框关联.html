@@ -1,0 +1,148 @@
+<html>
+    <head>
+        <title>添加标签</title>
+    </head>
+    <style>
+    .box{width:800px;overflow: hidden;margin: 0 auto;border:1px solid saddlebrown;}
+    .labelwrap{width:90%;overflow: hidden;margin-bottom:25px;padding:10px;}
+    .l{float:left;width:20%;}
+    .r{float:left;width:80%;}
+
+    .labelIcon{display: inline-block;height:24px;line-height:24px;border:1px solid #f01447;margin-left:4px;
+    background: #ffe7e4;border-radius:4px;padding:0px 8px;color:#f01447;font-size:14px;}
+    .labelErrIcon{display: inline-block;width:11px;height:11px;background: url("./img/label_close.png") no-repeat;vertical-align: middle;margin-left:4px;}
+
+    .table{width:100%;}
+    .table td{height:30px;}
+    .table td:nth-child(1){width:10%;text-align: center;}
+    .table td:nth-child(5){width:30%}
+    .table td:nth-child(6){width:6%;}
+
+        .icon{display: inline-block;width:20px;height:20px;background: url("./img/icon_radio.png") no-repeat;}
+        .icon.checked{display: inline-block;width:20px;height:20px;background: url("./img/icon_checked.png") no-repeat;}
+    </style>
+    <body>
+        <div class="box">
+            <div class="labelwrap">
+                <div class="l">
+                    <span>已选标签：</span>
+                </div>
+                <div class="r">
+                    <div class="label">
+                        <!-- <span class="labelIcon">王明 <i class="labelErrIcon"></i></div>     -->
+                    </div>
+                </div>
+                <table class="table" style="table-layout:fixed">
+                        <tr>
+                           <td num="1"><span class="icon checkbox"></span></td> 
+                           <td>王明</td>
+                           <td>18958587878</td>
+                           <td>身份证</td>
+                           <td>245484578784578548</td>   
+                           <td>男</td>
+                        </tr>
+                        <tr>
+                                <td num ="2"><span class="icon checkbox"></span></td> 
+                                <td>张敏</td>
+                                <td>18958587872</td>
+                                <td>身份证</td>
+                                <td>245484578784378548</td>   
+                                <td>女</td>
+                             </tr>
+                             <tr>
+                                    <td num ="3"><span class="icon checkbox"></span></td> 
+                                    <td>李栋</td>
+                                    <td>18958587872</td>
+                                    <td>身份证</td>
+                                    <td>245484578784378548</td>   
+                                    <td>女</td>
+                                 </tr>
+                                <tr>
+                                        <td num ="4"><span class="icon checkbox"></span></td> 
+                                        <td>高栏</td>
+                                        <td>18958587872</td>
+                                        <td>身份证</td>
+                                        <td>245484578784378548</td>   
+                                        <td>女</td>
+                                </tr>  
+                                <tr>
+                                        <td num ="5"><span class="icon checkbox"></span></td> 
+                                        <td>王莽</td>
+                                        <td>18958587872</td>
+                                        <td>身份证</td>
+                                        <td>245484578784378548</td>   
+                                        <td>女</td>
+                                </tr>  
+                                <tr>
+                                        <td num ="6"><span class="icon checkbox"></span></td> 
+                                        <td>曹操</td>
+                                        <td>18958587872</td>
+                                        <td>身份证</td>
+                                        <td>245484578784378548</td>   
+                                        <td>女</td>
+                                </tr>  
+                                <tr>
+                                        <td num ="7"><span class="icon checkbox"></span></td> 
+                                        <td>刘备</td>
+                                        <td>18958587872</td>
+                                        <td>身份证</td>
+                                        <td>245484578784378548</td>   
+                                        <td>女</td>
+                                </tr>  
+                </table>
+            </div>
+        </div>
+
+    </body>
+    <script src="./jquery.min.js"></script>  
+       <script>
+        //    说明：1：字符串模板不能动态添加动态属性值，要用$("<div></div>"),并创建在事件局部环境内-on(click,function(){此处})
+        //2:动态添加的属性不能够添加事件，要用$(document).on("click",".class",function(){})
+        //3:最后点击元素取消勾选不能用removeClass(会出现点击后首次再次勾选不起作用)要用.click 方法
+        //4:用到遍历each方法-$(dom).each(function(index,ele){筛选出符合对应条件的ele 进行remove等操作})
+        //5:toggle() 方法用于绑定两个或多个事件处理器函数，以响应被选元素的轮流的 click 事件。该方法也可用于切换被选元素的 hide() 与 show() 方法。小心别绑定为隐藏显示-会自动隐藏元素
+// -----------------------------
+// $(".checkbox").toggle(function(){
+// console.log(1)
+// },function(){
+// console.log(2)
+// },function(){
+// console.log(3)
+// })
+// ------------------------
+$(".checkbox").toggle(function(){
+    $(this).addClass("checked")
+    // 储存tnum 和text
+    var tnum = $(this).parents("td").attr("num")
+    var txt = $(this).parents("td").siblings("td:nth-child(2)").text()
+    // 然后再生成新dom-然后再插入
+    var dom = $("<span class='labelIcon' num = '"+tnum+"'>"+txt+" <i class='labelErrIcon'></i></div>")
+    $(".label").append(dom)   
+},function(){
+    // 储存当前点击的num属性
+    var tnum = $(this).parents("td").attr("num")
+    $(this).removeClass("checked")
+    var labels = $(".labelIcon")
+    // 遍历已添加的标签
+    labels.each(function(index,ele){
+        // 对应当前的标签 并删除
+        if($(ele).attr("num")==tnum ){
+            $(ele).remove()
+        }
+    })
+})
+
+// $(".labelIcon").on("click",function(){}) 不能用在生成的元素上 可以用live 代替 但是新版的jq取消了live 所以用另一种方式
+// $(".labelIcon").live("click",function(){
+//     console.log(213)
+// })
+$(document).on("click",".labelIcon",function(){
+    // 储存当前num
+    var num = $(this).attr("num")
+    num = parseInt(num)
+    var checkbox = $("table td[num='"+num+"']")
+    $(checkbox).children(".checkbox").click()
+})
+
+       </script>
+</html>
